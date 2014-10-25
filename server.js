@@ -1,4 +1,4 @@
-'use-strict';
+'use strict';
 
 var express = require('express'),
 	bodyParser = require('body-parser'),
@@ -8,7 +8,7 @@ var express = require('express'),
 	app = express(),
 	//MONGO SETUP
 	mongoose = require('mongoose'),
-	Friend = require('./sever-assets/friendCtrl');
+	Friend = require('./server-assets/friendCtrl');
 
 
 
@@ -25,14 +25,14 @@ app.use(express.static(__dirname + '/public'));
 
 
 
-app.get('/friends', Friend.getFriend());
-
-app.post('/friends/new', Friend.addFriend());
+app.get('/friends', Friend.getFriends);
+app.post('/friends', Friend.addFriend);
+app.delete('/friends/:id', Friend.unFriend);
 
 
 
 mongoose.connect(databaseReference);
-conneciton.once('open', function(){
+connection.once('open', function(){
 	app.listen(port, function(){
 		console.log('We are connected to Mongodb on' + port)
 	});

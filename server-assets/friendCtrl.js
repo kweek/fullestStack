@@ -3,10 +3,10 @@ var FriendModel = require('./friendModel');
 
 
 module.exports = {
-	getFriend: function(req, res){
-		FriendModel.find().exec(err, friends){
+	getFriends: function(req, res){
+		FriendModel.find().exec(function(err, friends){
 			res.send(friends);
-		}
+		})
 	},
 	addFriend: function(req, res){
 		var newFriend = new FriendModel(req.body);
@@ -17,5 +17,14 @@ module.exports = {
 				res.status(200).send(req.body.name + ' was successfully added to your friends list');
 			}
 		})
+	},
+	unFriend: function(req, res){
+		FriendModel.remove({_id: req.params.id }, function(err){
+			if(err){
+					res.send(err);
+			}else{
+					res.status(200).send("Friend has been removed") //friend is gone so you reference back to req.body
+			}
+		});
 	}
-};
+}
